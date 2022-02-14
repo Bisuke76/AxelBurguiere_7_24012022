@@ -1,4 +1,4 @@
-import Vue from 'vue'
+import { createApp } from 'vue'
 import VueRouter from 'vue-router'
 import Login from '../views/Login.vue'
 import Signup from '../views/Signup.vue'
@@ -9,10 +9,18 @@ import AllUser from '../views/AllUser.vue'
 import User from '../views/User.vue'
 import Param from '../views/Param.vue'
 
-Vue.use(VueRouter)
+//Vue.use(VueRouter)
 
-const routes = [
-  {
+const app = createApp(VueRouter)
+app.use()
+
+
+
+
+
+
+
+const routes = [{
     path: '/',
     name: 'Home',
     component: Login
