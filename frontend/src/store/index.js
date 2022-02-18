@@ -3,10 +3,13 @@ const moment = require('moment');
 moment().format();
 moment.locale('fr');
 
-import Vue from 'vue'
+import { createApp } from 'vue'
 import Vuex from 'vuex'
 
-Vue.use(Vuex)
+//Vue.use(Vuex)
+
+const app = createApp(Vuex)
+app.use()
 
 export default new Vuex.Store({
 	state: {
