@@ -1,4 +1,4 @@
-# toto
+# frontend
 
 ## Project setup
 ```

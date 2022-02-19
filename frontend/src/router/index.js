@@ -1,6 +1,6 @@
-import { createApp } from 'vue'
-import { createRouter } from 'vue-router'
-
+import Vue from 'vue'
+import VueRouter from 'vue-router'
+import Login from '../views/Login.vue'
 import Signup from '../views/Signup.vue'
 import Activity from '../views/Activity.vue'
 import Post from '../views/EditPost.vue'
@@ -8,19 +8,13 @@ import Comment from '../views/EditComment.vue'
 import AllUser from '../views/AllUser.vue'
 import User from '../views/User.vue'
 import Param from '../views/Param.vue'
-import Login from '../views/Login.vue'
 
-//Vue.use(VueRouter)
-
-const app = createApp()
-app.use()
+Vue.use(VueRouter)
 
 
 
-
-
-
-const routes = [{
+const routes = [
+  {
     path: '/',
     name: 'Home',
     component: Login
@@ -67,7 +61,9 @@ const routes = [{
   }
 ]
 
-const router = createRouter(routes)
-router.use()
+const router = new VueRouter({
+  routes,
+  mode: 'history'
+})
 
 export default router
