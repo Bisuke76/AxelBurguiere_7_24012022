@@ -88,7 +88,7 @@
 			<input type="email" name="email" id="email" placeholder="Tapez votre adresse Email" autofocus required v-model="email">
 
             <!-- Password -->
-			<label for="password">Mot-de-passe</label>
+			<label for="password">Mot de passe</label>
 			<input type="password" id="password" name="passeword" placeholder="Tapez votre mot de passe" required v-model="password">
 
             <!-- Button -->

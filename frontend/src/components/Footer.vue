@@ -1,4 +1,4 @@
-<template>
+npm<template>
 	<footer>
 		<h3>{{copyright}}</h3>
 	</footer>

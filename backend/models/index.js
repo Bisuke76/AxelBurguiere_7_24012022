@@ -5,7 +5,9 @@ const sequelize = new Sequelize(`${process.env.DB_BDD}`, `${process.env.DB_USER}
     host: "localhost"
 });
 
-sequelize.sync();
+// sequelize.sync();
+
+sequelize.sync() ;
 
 const db = {};
 

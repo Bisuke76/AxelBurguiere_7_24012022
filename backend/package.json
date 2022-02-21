@@ -1,5 +1,25 @@
 {
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "ISC",
   "dependencies": {
-    "mysql": "^2.18.1"
+    "bcrypt": "^5.0.1",
+    "dotenv": "^8.6.0",
+    "express": "^4.17.1",
+    "express-rate-limit": "^5.2.6",
+    "helmet": "^4.6.0",
+    "jsonwebtoken": "^8.5.1",
+    "multer": "^1.4.2",
+    "mysql2": "^2.2.5",
+    "password-validator": "^5.1.1",
+    "sequelize": "^6.6.2",
+    "xss": "^1.0.9"
   }
 }
