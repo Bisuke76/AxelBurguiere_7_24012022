@@ -2,9 +2,11 @@ Groupomania
 
 logiciels nécéssaires :
 
-1.MySQL
-2.NPM
-3.PHPmyAdmin
+-MySQL
+
+-NPM
+
+-PHPmyAdmin
 
 Etapes pour lancer le projet :
 
