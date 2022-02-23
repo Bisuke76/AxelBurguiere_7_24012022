@@ -94,11 +94,11 @@
             <label for="genre">Genre*</label><br/>
             <div class="genre">
                 <div>
-                    <input type="radio" id="genre" name="genre" value="homme" required @click="user_is_a_man"/>
+                    <input type="radio" id="genre-m" name="genre" value="homme" required @click="user_is_a_man"/>
                     <label for="genre">Homme</label>
                 </div>
                 <div>
-                    <input type="radio" id="genre" name="genre" value="femme" required @click="user_is_a_woman"/>
+                    <input type="radio" id="genre-f" name="genre" value="femme" required @click="user_is_a_woman"/>
                     <label for="genre">Femme</label>
                 </div>
             </div>
@@ -109,7 +109,7 @@
     </main>
 </template>
 
-<style scoped lang="css">
+<style scoped lang="scss">
 main{
     margin: 0 30px;
 }

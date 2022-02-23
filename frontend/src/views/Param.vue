@@ -184,7 +184,7 @@
     </main>
 </template>
 
-<style scoped lang="css">
+<style scoped lang="scss">
 main{
     margin-bottom: 2%;
 }

@@ -97,7 +97,7 @@
 	</main>
 </template>
 
-<style scoped lang="css">
+<style scoped lang="scss">
 main{
     margin: 0 30px;
 }

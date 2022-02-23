@@ -8,7 +8,7 @@ export default {
 	<input class="btn" v-on="$attrs" type="button" value="">
 </template>
 
-<style scoped lang="css">
+<style scoped lang="scss">
 .btn {
     padding: 3px;
     height: 80px;

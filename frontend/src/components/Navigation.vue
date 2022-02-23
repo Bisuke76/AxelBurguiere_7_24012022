@@ -78,7 +78,7 @@
 	</div>
 </template>
 
-<style scoped lang="css">
+<style scoped lang="scss">
 /*navbar*/
 nav{
 	padding: 25px;

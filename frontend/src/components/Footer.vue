@@ -14,7 +14,7 @@ npm<template>
 	}
 </script>
 
-<style scoped lang="css">
+<style scoped lang="scss">
 footer{
 	margin-left: 2%;
 }

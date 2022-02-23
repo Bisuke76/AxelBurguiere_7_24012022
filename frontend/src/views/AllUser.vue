@@ -76,7 +76,7 @@
     </main>
 </template>
 
-<style scoped lang="css">
+<style scoped lang="scss">
 main{
     display: flex;
     flex-direction: column;

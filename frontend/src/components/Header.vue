@@ -19,7 +19,7 @@ export default {
     </header>
 </template>
 
-<style scoped lang="css">
+<style scoped lang="scss">
 p{
     font-size: 30px;
     color: #fd2d01;
