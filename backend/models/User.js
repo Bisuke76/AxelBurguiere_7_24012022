@@ -22,10 +22,14 @@ module.exports = (sequelize, Sequelize) => {
     date: {
       type: Sequelize.DATE,
       defaultValue: Sequelize.NOW
+    },
+    isAdmin: {
+      type: Sequelize.BOOLEAN
     }
-  }, {
+    }, {
     timestamps: false
   });
+
 
   return User;
 };
