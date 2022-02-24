@@ -10,38 +10,38 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
 	state: {
-		webSiteName :'Groupomania',
-		login_signup:{
-			username : "",
-			passwordone : "",
-			passwordtwo : "",
-			sex : "",
-			email : ""
+		webSiteName: 'Groupomania',
+		login_signup: {
+			username: "",
+			passwordone: "",
+			passwordtwo: "",
+			sex: "",
+			email: ""
 		},
-		param:{
-			username : "",
-			imageUser:"",
-			email : "",
-			biography:"",
-			oldpassword:"",
-			newpasswordone : "",
-			newpasswordtwo : ""
+		param: {
+			username: "",
+			imageUser: "",
+			email: "",
+			biography: "",
+			oldpassword: "",
+			newpasswordone: "",
+			newpasswordtwo: ""
 		},
-		post:{
-			img : "",
-			id : "",
-			text : "",
+		post: {
+			img: "",
+			id: "",
+			text: "",
 		},
-		comment:{
-			id : "",
-			text : "",
+		comment: {
+			id: "",
+			text: "",
 		},
 		user_id_pointed: "",
-		lettersRg : /^[-'a-zA-ZÀ-ÖØ-öø-ÿœ\s.]+$/,
-		postsRg : /^[-'a-zA-Z0-9À-ÖØ-öø-ÿœ\s#!^$()?+*.:,|]+$/,
-		emailRg : /^[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$/
+		lettersRg: /^[-'a-zA-ZÀ-ÖØ-öø-ÿœ\s.]+$/,
+		postsRg: /^[-'a-zA-Z0-9À-ÖØ-öø-ÿœ\s#!^$()?+*.:,|]+$/,
+		emailRg: /^[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$/
 	},
-	getters:{
+	getters: {
 		copyright: (state) => {
 			const currentYear = new Date().getFullYear()
 
@@ -49,15 +49,15 @@ export default new Vuex.Store({
 		}
 	},
 	mutations: {
-		USER_MAN (state){
+		USER_MAN(state) {
 			state.login_signup.sex = "M"
 		},
-		USER_WOMAN (state){
+		USER_WOMAN(state) {
 			state.login_signup.sex = "F"
 		},
 	},
 	actions: {
-		userPostSignup(context){
+		userPostSignup(context) {
 			//Init RG
 			let lettersRg = context.state.lettersRg
 			let emailRg = context.state.emailRg
@@ -75,36 +75,34 @@ export default new Vuex.Store({
 
 					//Send info to Back
 					axios.post('http://localhost:3000/api/auth/signup', {
-						username: context.state.login_signup.username,
-						password: password,
-						email: context.state.login_signup.email,
-						sex : context.state.login_signup.sex
-					})
-					.then(() => {
+							username: context.state.login_signup.username,
+							password: password,
+							email: context.state.login_signup.email,
+							sex: context.state.login_signup.sex
+						})
+						.then(() => {
 
-						//Get info and send them to SessionStorage
-						let user = {
-							email : context.state.login_signup.email,
-							password : password
-						}
+							//Get info and send them to SessionStorage
+							let user = {
+								email: context.state.login_signup.email,
+								password: password
+							}
 
-						let userItems = JSON.stringify(user)
-						sessionStorage.setItem('user', userItems)
-						window.location.href = 'http://localhost:8080/Login';
-					})
-					.catch(error => {
-						alert(`Quelque chose c'est mal passé. Essayez à nouveau et vérifiez que la sécurité du mot de passe ne soit pas faible. ${error}`)
-					});
-				}
-				else {
+							let userItems = JSON.stringify(user)
+							sessionStorage.setItem('user', userItems)
+							window.location.href = 'http://localhost:8080/Login';
+						})
+						.catch(error => {
+							alert(`Quelque chose c'est mal passé. Essayez à nouveau et vérifiez que la sécurité du mot de passe ne soit pas faible. ${error}`)
+						});
+				} else {
 					alert("Le formulaire n'est pas valide. Les nombres sont interdis pour le username. Vérifer que l'adresse mail est valide")
 				}
-			}
-			else {
+			} else {
 				alert("Les mots de passe ne sont pas identiques")
 			}
 		},
-		userPostLogin(context){
+		userPostLogin(context) {
 			//Init RG
 			let emailRg = context.state.emailRg
 			let password = context.state.login_signup.passwordone
@@ -117,42 +115,41 @@ export default new Vuex.Store({
 
 				//Send info to Back
 				axios.post('http://localhost:3000/api/auth/login', {
-					password: password,
-					email: context.state.login_signup.email,
-				})
-				.then(response => {
+						password: password,
+						email: context.state.login_signup.email,
+					})
+					.then(response => {
 
-					//Remove SessionStorage
-					sessionStorage.removeItem('user');
+						//Remove SessionStorage
+						sessionStorage.removeItem('user');
 
-                    //Get info and send them to SessionStorage
-                    let user = {
-                        id : response.data.userId,
-                        roleId : response.data.roleId,
-                        sex: response.data.sex,
-                        img: response.data.image,
-                        token : response.data.token
-                    }
+						//Get info and send them to SessionStorage
+						let user = {
+							id: response.data.userId,
+							roleId: response.data.roleId,
+							sex: response.data.sex,
+							img: response.data.image,
+							token: response.data.token
+						}
 
-                    let userItems = JSON.stringify(user)
-                    sessionStorage.setItem('userToken', userItems)
-                    window.location.href = 'http://localhost:8080/Activity'
-                })
-                .catch(error => {
-                    alert(`Le mot de passe ou l'utilisateur n'est pas valide. ${error}`)
-                });
-            }
-            else {
-                alert("Le formulaire n'est pas valide. Vérifer que l'adresse mail est valide")
-            }
+						let userItems = JSON.stringify(user)
+						sessionStorage.setItem('userToken', userItems)
+						window.location.href = 'http://localhost:8080/Activity'
+					})
+					.catch(error => {
+						alert(`Le mot de passe ou l'utilisateur n'est pas valide. ${error}`)
+					});
+			} else {
+				alert("Le formulaire n'est pas valide. Vérifer que l'adresse mail est valide")
+			}
 		},
-		userSignout(){
+		userSignout() {
 			sessionStorage.removeItem('userToken');
 			window.location.href = 'http://localhost:8080/'
 		},
 
 
-		postPostCreate(context){
+		postPostCreate(context) {
 			//Init RG, content and Validation
 			let rg = context.state.postsRg
 			let image = context.state.post.img
@@ -167,8 +164,8 @@ export default new Vuex.Store({
 				let userStorage = JSON.parse(sessionStorage.getItem('userToken'))
 
 				let post = {
-					text : content,
-					userid : userStorage.id
+					text: content,
+					userid: userStorage.id
 				}
 
 				//Init info in FormData
@@ -179,22 +176,22 @@ export default new Vuex.Store({
 
 				//Send info to Back
 				axios.post('http://localhost:3000/api/post', formData, {
-					headers:{
-						'Content-Type': 'multipart/form-data',
-						'Authorization' : `Token ${userStorage.token}`
-					}
-				})
-				.then(() => {
-					window.location.reload();
-				})
-				.catch(error => {
-					alert(`Quelque chose c'est mal passé.${error}`)
-				})
-			}else {
+						headers: {
+							'Content-Type': 'multipart/form-data',
+							'Authorization': `Token ${userStorage.token}`
+						}
+					})
+					.then(() => {
+						window.location.reload();
+					})
+					.catch(error => {
+						alert(`Quelque chose c'est mal passé.${error}`)
+					})
+			} else {
 				alert("Le contenu du post n'est pas valide ou est inexistant")
 			}
 		},
-		putPostEdit(context){
+		putPostEdit(context) {
 			//Init RG, content and Validation
 			let rg = context.state.postsRg
 			let post_id = context.state.post.id
@@ -212,20 +209,39 @@ export default new Vuex.Store({
 			}
 
 			//If there is content
-			if(content){
+			if (content) {
 				if (content_valid) {
 
 					//Init info in FormData
 					let post = {
-						text : content
+						text: content
 					}
 					formData.append('content', JSON.stringify(post));
 
 					//Send info to Back
 					axios.put(`http://localhost:3000/api/post/${post_id}`, formData, {
-						headers:{
+							headers: {
+								'Content-Type': 'multipart/form-data',
+								'Authorization': `Token ${userStorage.token}`
+							}
+						})
+						.then(() => {
+							window.location.reload();
+						})
+						.catch(error => {
+							alert(`Quelque chose c'est mal passé.${error}`)
+						})
+				} else {
+					alert("Le contenu du post n'est pas valide")
+				}
+
+				//If there isn't content
+			} else {
+				//Send info to Back
+				axios.put(`http://localhost:3000/api/post/${post_id}`, formData, {
+						headers: {
 							'Content-Type': 'multipart/form-data',
-							'Authorization' : `Token ${userStorage.token}`
+							'Authorization': `Token ${userStorage.token}`
 						}
 					})
 					.then(() => {
@@ -234,48 +250,29 @@ export default new Vuex.Store({
 					.catch(error => {
 						alert(`Quelque chose c'est mal passé.${error}`)
 					})
-				}else {
-					alert("Le contenu du post n'est pas valide")
-				}
-
-			//If there isn't content
-			}else{
-				//Send info to Back
-				axios.put(`http://localhost:3000/api/post/${post_id}`, formData, {
-					headers:{
-						'Content-Type': 'multipart/form-data',
-						'Authorization' : `Token ${userStorage.token}`
-					}
-				})
-				.then(() => {
-					window.location.reload();
-				})
-				.catch(error => {
-					alert(`Quelque chose c'est mal passé.${error}`)
-				})
 			}
 		},
-		deletePostDelete(context){
+		deletePostDelete(context) {
 			//Init post_id, userStorage and Validation
 			let post_id = context.state.post.id
 			let userStorage = JSON.parse(sessionStorage.getItem('userToken'))
 
 			//Send info to Back
-			axios.delete(`http://localhost:3000/api/post/${post_id}`,{
-				headers:{
-					'Authorization' : `Token ${userStorage.token}`
-				}
-			})
-			.then(() => {
-				window.location.href = 'http://localhost:8080/Activity';
-			})
-			.catch(error => {
-				alert(`Quelque chose c'est mal passé.${error}`)
-			})
+			axios.delete(`http://localhost:3000/api/post/${post_id}`, {
+					headers: {
+						'Authorization': `Token ${userStorage.token}`
+					}
+				})
+				.then(() => {
+					window.location.href = 'http://localhost:8080/Activity';
+				})
+				.catch(error => {
+					alert(`Quelque chose c'est mal passé.${error}`)
+				})
 		},
 
 
-		postCommentCreate(context){
+		postCommentCreate(context) {
 			//Init RG, content and Validation
 			let rg = context.state.postsRg
 			let post_id = context.state.post.id
@@ -288,28 +285,28 @@ export default new Vuex.Store({
 				//init userStorage and comment content
 				let userStorage = JSON.parse(sessionStorage.getItem('userToken'))
 				let comment = {
-					text : content,
-					userid : userStorage.id
+					text: content,
+					userid: userStorage.id
 				}
 
 				//Send info to Back
 				axios.post(`http://localhost:3000/api/comment/${post_id}`, comment, {
-					headers:{
-						'Content-Type': 'application/json',
-						'Authorization' : `Token ${userStorage.token}`
-					}
-				})
-				.then(() => {
-					window.location.reload();
-				})
-				.catch(error => {
-					alert(`Quelque chose c'est mal passé.${error}`)
-				})
-			}else {
+						headers: {
+							'Content-Type': 'application/json',
+							'Authorization': `Token ${userStorage.token}`
+						}
+					})
+					.then(() => {
+						window.location.reload();
+					})
+					.catch(error => {
+						alert(`Quelque chose c'est mal passé.${error}`)
+					})
+			} else {
 				alert("Le contenu du post n'est pas valide ou est inexistant")
 			}
 		},
-		putCommentEdit(context){
+		putCommentEdit(context) {
 			//Init RG, comment id, content and Validation
 			let rg = context.state.postsRg
 			let comment_id = context.state.comment.id
@@ -322,14 +319,35 @@ export default new Vuex.Store({
 				//init userStorage and comment content
 				let userStorage = JSON.parse(sessionStorage.getItem('userToken'))
 				let comment = {
-					text : content
+					text: content
 				}
 
 				//Send info to Back
 				axios.put(`http://localhost:3000/api/comment/${comment_id}`, comment, {
-					headers:{
-						'Content-Type': 'application/json',
-						'Authorization' : `Token ${userStorage.token}`
+						headers: {
+							'Content-Type': 'application/json',
+							'Authorization': `Token ${userStorage.token}`
+						}
+					})
+					.then(() => {
+						window.location.href = 'http://localhost:8080/Activity';
+					})
+					.catch(error => {
+						alert(`Quelque chose c'est mal passé.${error}`)
+					})
+			} else {
+				alert("Le contenu du post n'est pas valide ou est inexistant. Si aucune modification a été faite appuyer sur Annuler")
+			}
+		},
+		deleteCommentDelete(context) {
+			//Init data
+			let comment_id = context.state.comment.id
+			let userStorage = JSON.parse(sessionStorage.getItem('userToken'))
+
+			//Send info to Back
+			axios.delete(`http://localhost:3000/api/comment/${comment_id}`, {
+					headers: {
+						'Authorization': `Token ${userStorage.token}`
 					}
 				})
 				.then(() => {
@@ -338,31 +356,10 @@ export default new Vuex.Store({
 				.catch(error => {
 					alert(`Quelque chose c'est mal passé.${error}`)
 				})
-			}else {
-				alert("Le contenu du post n'est pas valide ou est inexistant. Si aucune modification a été faite appuyer sur Annuler")
-			}
-		},
-		deleteCommentDelete(context){
-			//Init data
-			let comment_id = context.state.comment.id
-			let userStorage = JSON.parse(sessionStorage.getItem('userToken'))
-
-			//Send info to Back
-			axios.delete(`http://localhost:3000/api/comment/${comment_id}`,{
-				headers:{
-					'Authorization' : `Token ${userStorage.token}`
-				}
-			})
-			.then(() => {
-				window.location.href = 'http://localhost:8080/Activity';
-			})
-			.catch(error => {
-				alert(`Quelque chose c'est mal passé.${error}`)
-			})
 		},
 
 
-		putParamEdit(context){
+		putParamEdit(context) {
 			//Init RG
 			let lettersRg = context.state.lettersRg
 			let emailRg = context.state.emailRg
@@ -389,17 +386,17 @@ export default new Vuex.Store({
 
 				//Init param with all options
 				let param = {
-					username : username,
-					email : email,
+					username: username,
+					email: email,
 				}
 
 				if (biography) {
 					if (biography_valid) {
 						param.biography = biography
-					}else{
+					} else {
 						alert("Les modifications ne sont pas valides")
 					}
-				}else{
+				} else {
 					param.biography = ""
 				}
 
@@ -411,37 +408,37 @@ export default new Vuex.Store({
 
 				//Send info to Back
 				axios.put(`http://localhost:3000/api/param/user/${user_id}`, formData, {
-					headers:{
-						'Content-Type': 'multipart/form-data',
-						'Authorization' : `Token ${userStorage.token}`
-					}
-				})
-				.then(response => {
+						headers: {
+							'Content-Type': 'multipart/form-data',
+							'Authorization': `Token ${userStorage.token}`
+						}
+					})
+					.then(response => {
 
-					//If image => change userStorage
-					if (response.data.newImage) {
-						let user = {
-							id : userStorage.id,
-							roleId : userStorage.roleId,
-							sex: userStorage.sex,
-							img: response.data.newImage,
-							token : userStorage.token
+						//If image => change userStorage
+						if (response.data.newImage) {
+							let user = {
+								id: userStorage.id,
+								roleId: userStorage.roleId,
+								sex: userStorage.sex,
+								img: response.data.newImage,
+								token: userStorage.token
+							}
+
+							let userItems = JSON.stringify(user)
+							sessionStorage.setItem('userToken', userItems)
 						}
 
-						let userItems = JSON.stringify(user)
-						sessionStorage.setItem('userToken', userItems)
-                    }
-
-					window.location.reload();
-				})
-				.catch(error => {
-					alert(`Quelque chose c'est mal passé.${error}`)
-				})
-			}else {
+						window.location.reload();
+					})
+					.catch(error => {
+						alert(`Quelque chose c'est mal passé.${error}`)
+					})
+			} else {
 				alert("Les modifications ne sont pas valides")
 			}
 		},
-		putPassWordEdit(context){
+		putPassWordEdit(context) {
 			let user_id = context.state.user_id_pointed
 			//Compare Passwords
 			if (context.state.param.newpasswordone === context.state.param.newpasswordtwo) {
@@ -451,55 +448,53 @@ export default new Vuex.Store({
 				let userStorage = JSON.parse(sessionStorage.getItem('userToken'))
 
 				let PWchange = {
-					oldpassword : context.state.param.oldpassword,
-					newpassword : password
+					oldpassword: context.state.param.oldpassword,
+					newpassword: password
 				}
 
 				//Send info to Back
 				axios.put(`http://localhost:3000/api/param/password/${user_id}`, PWchange, {
-					headers:{
-						'Content-Type': 'application/json',
-						'Authorization' : `Token ${userStorage.token}`
-					}
-				})
-				.then(() => {
-					window.location.reload();
-				})
-				.catch(error => {
-					alert(`Quelque chose c'est mal passé.${error}`)
-				})
-			}
-			else {
+						headers: {
+							'Content-Type': 'application/json',
+							'Authorization': `Token ${userStorage.token}`
+						}
+					})
+					.then(() => {
+						window.location.reload();
+					})
+					.catch(error => {
+						alert(`Quelque chose c'est mal passé.${error}`)
+					})
+			} else {
 				alert("Les mots de passe ne sont pas identiques")
 			}
 		},
-		deleteUserDelete(context){
+		deleteUserDelete(context) {
 			//Init Data
 			let user_id = context.state.user_id_pointed
 			let userStorage = JSON.parse(sessionStorage.getItem('userToken'))
 
 			//Send info to Back
-			axios.delete(`http://localhost:3000/api/param/${user_id}`,{
-				headers:{
-					'Authorization' : `Token ${userStorage.token}`
-				}
-			})
-			.then(() => {
-				//if the deleted user is the active user => signout
-				if (user_id === userStorage.id) {
-					sessionStorage.removeItem('userToken');
-					window.location.href = 'http://localhost:8080/'
-				}
-				//if not, go to AllUser
-				else{
-					window.location.href = 'http://localhost:8080/User'
-				}
-			})
-			.catch(error => {
-				alert(`Quelque chose c'est mal passé.${error}`)
-			})
+			axios.delete(`http://localhost:3000/api/param/${user_id}`, {
+					headers: {
+						'Authorization': `Token ${userStorage.token}`
+					}
+				})
+				.then(() => {
+					//if the deleted user is the active user => signout
+					if (user_id === userStorage.id) {
+						sessionStorage.removeItem('userToken');
+						window.location.href = 'http://localhost:8080/'
+					}
+					//if not, go to AllUser
+					else {
+						window.location.href = 'http://localhost:8080/User'
+					}
+				})
+				.catch(error => {
+					alert(`Quelque chose c'est mal passé.${error}`)
+				})
 		},
 	},
-	modules: {
-	}
+	modules: {}
 })

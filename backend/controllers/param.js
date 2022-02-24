@@ -10,43 +10,43 @@ const Post = db.posts
 const schemaPassValid = new passwordValidator();
 
 schemaPassValid
-.is().min(8)
-.is().max(50)
-.has().uppercase()
-.has().lowercase()
-.has().digits(2)
-.has().not().spaces()
-.is().not().oneOf(['Passw0rd', 'Password123']);
+  .is().min(8)
+  .is().max(50)
+  .has().uppercase()
+  .has().lowercase()
+  .has().digits()
+  .has().not().spaces()
+  .is().not().oneOf(['Passw0rd', 'Password123']);
 
 exports.getAllUsers = (req, res, next) => {
   //get all users
   Param.findAll()
-  .then((users) => {
-    res.status(200).json(users);
-  })
-  .catch(
-    (error) => {
-      res.status(400).json({
-        error: error
-      });
-    }
-  );
+    .then((users) => {
+      res.status(200).json(users);
+    })
+    .catch(
+      (error) => {
+        res.status(400).json({
+          error: error
+        });
+      }
+    );
 };
 
 exports.getOneUserParam = (req, res, next) => {
   const id = req.params.id;
 
   Param.findByPk(id)
-  .then((userParam) => {
-    res.status(200).json(userParam);
-  })
-  .catch(
-    (error) => {
-      res.status(400).json({
-        error: error
-      });
-    }
-  );
+    .then((userParam) => {
+      res.status(200).json(userParam);
+    })
+    .catch(
+      (error) => {
+        res.status(400).json({
+          error: error
+        });
+      }
+    );
 };
 
 exports.modifyParam = (req, res, next) => {
@@ -58,9 +58,9 @@ exports.modifyParam = (req, res, next) => {
   const paramObject = JSON.parse(req.body.content);
 
   const param = {
-    username : xss(paramObject.username),
-    email : xss(paramObject.email),
-    biography : xss(paramObject.biography)
+    username: xss(paramObject.username),
+    email: xss(paramObject.email),
+    biography: xss(paramObject.biography)
   };
 
   if (req.file) {
@@ -74,46 +74,72 @@ exports.modifyParam = (req, res, next) => {
       if (userId === user.id) {
 
         //if image =>
-        if (req.file){
-          if(user.image){
+        if (req.file) {
+          if (user.image) {
 
             //delete original image
             const filename = user.image.split('/images/')[1];
             fs.unlink(`images/${filename}`, () => {
 
               //change param
-              Param.update(param, { where: { id: id }})
-              .then(data => {
-                res.status(201).json({ message: 'Utilisateur modifié !', newImage: param.image})
-              })
-              .catch(error => res.status(500).json({ error }));
+              Param.update(param, {
+                  where: {
+                    id: id
+                  }
+                })
+                .then(data => {
+                  res.status(201).json({
+                    message: 'Utilisateur modifié !',
+                    newImage: param.image
+                  })
+                })
+                .catch(error => res.status(500).json({
+                  error
+                }));
             });
-          }else{
+          } else {
 
             //change param if no image
-            Param.update(param, { where: { id: id }})
-            .then(data => {
-              res.status(201).json({ message: 'Utilisateur modifié !', newImage: param.image})
-            })
-            .catch(error => res.status(500).json({ error }));
+            Param.update(param, {
+                where: {
+                  id: id
+                }
+              })
+              .then(data => {
+                res.status(201).json({
+                  message: 'Utilisateur modifié !',
+                  newImage: param.image
+                })
+              })
+              .catch(error => res.status(500).json({
+                error
+              }));
           }
         }
         //if not =>
-        else{
-          Param.update(param, { where: { id: id }})
-          .then(data => {
-            res.status(201).json({ message: 'Utilisateur modifié !' })
-          })
-          .catch(error => res.status(500).json({ error }));
+        else {
+          Param.update(param, {
+              where: {
+                id: id
+              }
+            })
+            .then(data => {
+              res.status(201).json({
+                message: 'Utilisateur modifié !'
+              })
+            })
+            .catch(error => res.status(500).json({
+              error
+            }));
         }
 
-      //if not => error
-      }else{
+        //if not => error
+      } else {
         res.status(401).json({
           error: new Error('Invalid request!')
         });
       }
-      
+
     })
     .catch(
       (error) => {
@@ -121,7 +147,7 @@ exports.modifyParam = (req, res, next) => {
           error: error
         });
       }
-    ); 
+    );
 };
 
 exports.modifyPassword = (req, res, next) => {
@@ -149,41 +175,59 @@ exports.modifyPassword = (req, res, next) => {
 
             //if not the same
             if (!valid) {
-              return res.status(401).json({ error: "Mot de passe d'origine incorrect !" });
+              return res.status(401).json({
+                error: "Mot de passe d'origine incorrect !"
+              });
             }
 
             //if not valid
             if (!schemaPassValid.validate(newpassword)) {
-              return res.status(401).json({ error: 'Sécurité du mot de passe faible. Il doit contenir au moins 8 caractère, des majuscules et deux chiffres' })
+              return res.status(401).json({
+                error: 'Sécurité du mot de passe faible. Il doit contenir au moins 8 caractère, des majuscules et des chiffres'
+              })
             }
 
             //Init New password
             bcrypt.hash(newpassword, 10)
-            .then(hash => {
-              const password = {
-                password : hash
-              };
+              .then(hash => {
+                const password = {
+                  password: hash
+                };
 
-              //Send data to BDD
-              Param.update(password, { where: { id: id }})
-              .then(data => {
-                res.status(201).json({ message: 'Mot de passe modifié !' })
+                //Send data to BDD
+                Param.update(password, {
+                    where: {
+                      id: id
+                    }
+                  })
+                  .then(data => {
+                    res.status(201).json({
+                      message: 'Mot de passe modifié !'
+                    })
+                  })
+                  .catch(error => res.status(500).json({
+                    error
+                  }));
+
               })
-              .catch(error => res.status(500).json({ error }));
-
-            })
-            .catch(error => res.status(500).json({ error }));
+              .catch(error => res.status(500).json({
+                error
+              }));
           })
-          .catch(error => res.status(500).json({ error }));
+          .catch(error => res.status(500).json({
+            error
+          }));
 
-      //if not => error
-      }else{
+        //if not => error
+      } else {
         res.status(401).json({
           error: new Error('Invalid request!')
         });
       }
     })
-    .catch(error => res.status(500).json({ error }));
+    .catch(error => res.status(500).json({
+      error
+    }));
 };
 
 exports.deleteUser = (req, res, next) => {
@@ -192,51 +236,91 @@ exports.deleteUser = (req, res, next) => {
   const roleId = decodedToken.roleId
   const userId = decodedToken.userId
   const id = req.params.id;
-  
+
   //if admin or if the creator =>
   if (roleId === 2 || userId == id) {
 
     //Get all post from one user
-    Post.findAll({ where: { userId: id } })
-    .then((posts) => {
-
-      //Delete Post and image
-      posts.forEach(post =>{
-
-        //Delete if image
-        if (post.image != "") {
-          const filename = post.image.split('/images/')[1];
-          fs.unlink(`images/${filename}`, () => {
-            Post.destroy({ where: { id : post.id }})
-            .catch(error => res.status(400).json({ error }));
-          });
-
-        //Delete if no image
-        }else{
-          Post.destroy({ where: { id : post.id }})
-          .catch(error => res.status(400).json({ error }));
+    Post.findAll({
+        where: {
+          userId: id
         }
       })
+      .then((posts) => {
 
-      //Get one user
-      Param.findByPk(id)
-      .then((user) => {
+        //Delete Post and image
+        posts.forEach(post => {
 
-        //Delete if image
-        if (user.image != null) {
-          const filename = user.image.split('/images/')[1];
-          fs.unlink(`images/${filename}`, () => {
-            Param.destroy({ where: { id : id }})
-            .then(() => res.status(200).json({ message: 'Utilisateur supprimé !'}))
-            .catch(error => res.status(400).json({ error }));
-          });
+          //Delete if image
+          if (post.image != "") {
+            const filename = post.image.split('/images/')[1];
+            fs.unlink(`images/${filename}`, () => {
+              Post.destroy({
+                  where: {
+                    id: post.id
+                  }
+                })
+                .catch(error => res.status(400).json({
+                  error
+                }));
+            });
 
-        //Delete if no image
-        }else{
-          Param.destroy({ where: { id : id }})
-          .then(() => res.status(200).json({ message: 'Utilisateur supprimé !'}))
-          .catch(error => res.status(400).json({ error }));
-        }
+            //Delete if no image
+          } else {
+            Post.destroy({
+                where: {
+                  id: post.id
+                }
+              })
+              .catch(error => res.status(400).json({
+                error
+              }));
+          }
+        })
+
+        //Get one user
+        Param.findByPk(id)
+          .then((user) => {
+
+            //Delete if image
+            if (user.image != null) {
+              const filename = user.image.split('/images/')[1];
+              fs.unlink(`images/${filename}`, () => {
+                Param.destroy({
+                    where: {
+                      id: id
+                    }
+                  })
+                  .then(() => res.status(200).json({
+                    message: 'Utilisateur supprimé !'
+                  }))
+                  .catch(error => res.status(400).json({
+                    error
+                  }));
+              });
+
+              //Delete if no image
+            } else {
+              Param.destroy({
+                  where: {
+                    id: id
+                  }
+                })
+                .then(() => res.status(200).json({
+                  message: 'Utilisateur supprimé !'
+                }))
+                .catch(error => res.status(400).json({
+                  error
+                }));
+            }
+          })
+          .catch(
+            (error) => {
+              res.status(400).json({
+                error: error
+              });
+            }
+          );
       })
       .catch(
         (error) => {
@@ -245,17 +329,9 @@ exports.deleteUser = (req, res, next) => {
           });
         }
       );
-    })
-    .catch(
-      (error) => {
-        res.status(400).json({
-          error: error
-        });
-      }
-    );
 
-  //if not => error
-  }else{
+    //if not => error
+  } else {
     res.status(401).json({
       error: new Error('Invalid request!')
     });
