@@ -162,15 +162,15 @@
                     <h2>MOT DE PASSE</h2>
 
                     <!-- Old password -->
-                    <label for="oldpasseword">Ancien mot-de-passe</label>
+                    <label for="oldpasseword">Ancien mot de passe</label>
                     <input type="password" id="oldpassword" name="oldpasseword" placeholder="Ancien mot de passe" required v-model="oldpassword">
 
                     <!-- New password -->
-                    <label for="newpassewordone">Nouveau mot-de-passe</label>
+                    <label for="newpassewordone">Nouveau mot de passe</label>
                     <input type="password" id="newpasswordone" name="newpasswordone" placeholder="Nouveau mot de passe" required v-model="newpasswordone">
 
                     <!-- New password confirmation -->
-                    <label for="newpassewordtwo">Confirmation du mot-de-passe</label>
+                    <label for="newpassewordtwo">Confirmation du mot de passe</label>
                     <input type="password" id="newpasswordtwo" name="newpasswordtwo" placeholder="Confirmer le mot de passe" required v-model="newpasswordtwo">
 
                     <SubmitButton class="btn-custom" @click="putPassWordEdit" value="Enregistrer"/>

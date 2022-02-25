@@ -19,7 +19,7 @@ footer{
 	margin-left: 2%;
 }
 h3{
-   color:#122542;
+   color:#d1515a;
    font-size:20px;
 }
 </style>

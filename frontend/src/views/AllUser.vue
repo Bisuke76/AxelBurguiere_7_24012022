@@ -144,7 +144,7 @@ i{
     width: 100%;
 }
 .role{
-    color: #d1515a;
+    color: #fd2d01;
     margin-right: 10px;
 }
 .btn-custom{
