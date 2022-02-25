@@ -7,13 +7,13 @@ module.exports = (sequelize, Sequelize) => {
     email: {
       type: Sequelize.STRING(191),
       allowNull: false,
-      unique: 'uniqueIndex'
+      unique : 'uniqueIndex'
     },
     password: {
       type: Sequelize.STRING(100),
       allowNull: false
     },
-    biography: Sequelize.TEXT,
+    biography : Sequelize.TEXT,
     image: Sequelize.STRING(191),
     sex: {
       type: Sequelize.STRING(1),
@@ -22,14 +22,10 @@ module.exports = (sequelize, Sequelize) => {
     date: {
       type: Sequelize.DATE,
       defaultValue: Sequelize.NOW
-    },
-    isAdmin: {
-      type: Sequelize.BOOLEAN
     }
-    }, {
+  }, {
     timestamps: false
   });
-
 
   return User;
 };
